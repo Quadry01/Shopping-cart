@@ -1,5 +1,10 @@
-import Image from "next/image";
+"use client";
+import Login from "./LoginPage/page";
 
 export default function Home() {
-  return <main className=""></main>;
+  return (
+    <main className="">
+      <Login />
+    </main>
+  );
 }
