@@ -8,7 +8,7 @@ import { React, useEffect, useState } from "react";
 
 function ProductsPage() {
   const [cart, setCart] = useState({});
-  const [hidecart, setHideCart] = useState("hidden");
+  const [hideCart, setHideCart] = useState("hidden");
   const [productList, setProductList] = useState([]);
   const values = Object.values(cart);
 
@@ -54,10 +54,10 @@ function ProductsPage() {
     getProducts();
   }, []);
 
-  // GET PRODUCTS FRONM DATABASE
-  const getProducts = () => {
+  // GET PRODUCTS FROM DATABASE
+  const getProducts = async () => {
     const productCollection = collection(db, "ProductList");
-    getDocs(productCollection)
+    await getDocs(productCollection)
       .then((res) => {
         const products = res.docs.map((doc) => ({
           data: doc.data(),
@@ -66,7 +66,7 @@ function ProductsPage() {
         setProductList(products);
       })
       .catch((err) => {
-        alert(err.message);
+        alert(err.code);
       });
   };
 
@@ -128,7 +128,7 @@ function ProductsPage() {
       </div>
 
       <div
-        className={` ${hidecart} w-4/12 bg-red-100 p-4 shadow-lg absolute right-4 top-16`}
+        className={` ${hideCart} w-4/12 bg-red-100 p-4 shadow-lg absolute right-4 top-16`}
       >
         {Object.entries(cart).map(([key, item]) => (
           <div key={key} className="flex mt-2 ">

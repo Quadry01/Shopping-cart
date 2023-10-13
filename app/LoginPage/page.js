@@ -8,6 +8,7 @@ import { auth, provider } from "../../FirebaseConfig/Firebase";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   // REDIRECT USER AFTER SIGNIN
   const RedirectUser = (e) => {
     window.location.replace("ProductPage");
@@ -19,8 +20,14 @@ function Login() {
       e.preventDefault();
       await createUserWithEmailAndPassword(auth, email, password);
       RedirectUser();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err.code === "auth/invalid-email") {
+        alert("Enter a valid Email and Password");
+      } else if (email === "" && password === "") {
+        alert("Enter a valid Email and Password");
+      } else if (err.code === "auth/internal-error") {
+        alert("Check Internet conection");
+      }
     }
   };
   // LOGIN USER WITH GOOGLE MAIL
@@ -31,7 +38,11 @@ function Login() {
       console.log(auth.currentUser, auth.currentUser.photoURL);
       RedirectUser();
     } catch (error) {
-      console.log(error);
+      if (error.code === "auth/internal-error") {
+        alert("Check Internet conection");
+      } else if (error.code === "auth/popup-closed-by-user") {
+        alert("Popup closed by user");
+      }
     }
   };
 
