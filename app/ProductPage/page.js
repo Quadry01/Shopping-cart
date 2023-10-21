@@ -3,14 +3,31 @@ import Image from "next/image";
 import { db } from "@/FirebaseConfig/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { BsCartDash, BsPlusSquare } from "react-icons/bs";
-import { AiOutlineDelete, AiOutlineMinusSquare } from "react-icons/ai";
+import {
+  AiOutlineDelete,
+  AiOutlineMinusSquare,
+  AiFillDelete,
+} from "react-icons/ai";
 import { React, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductsPage() {
   const [cart, setCart] = useState({});
   const [hideCart, setHideCart] = useState("hidden");
+  const [hideDeleteBTN, setHideDeleteBTN] = useState("hidden");
   const [productList, setProductList] = useState([]);
-  const values = Object.values(cart);
+
+  const handleDragOut = (e, product) => {
+    let pass = JSON.stringify(product);
+    e.dataTransfer.setData("item", pass);
+    setHideDeleteBTN("show");
+  };
+
+  const handleDragIn = (product, e) => {
+    let item = JSON.stringify(product);
+    e.dataTransfer.setData("item", item);
+  };
 
   // INCEARESE ITEM QUANTITY INSIDE CART
   const quantityIncrement = (item, key) => {
@@ -34,15 +51,15 @@ function ProductsPage() {
   };
   // ADD ITEM FROM CART
   const addItemToCart = (product) => {
-    setCart({ ...cart, [product.id]: { ...product.data, quantity: 1 } });
+    setCart({
+      ...cart,
+      [product.id]: { ...product.data, quantity: 1, id: product.id },
+    });
   };
   // REMOVE ITEM FROM CART
   const removeItemFromCart = (product) => {
     setCart(
-      Object.assign(
-        {},
-        Object.values(cart).filter((filterTag) => filterTag !== product)
-      )
+      Object.values(cart).filter((filterTag) => filterTag.id !== product.id)
     );
     if (Object.keys(cart).length === 1) {
       setHideCart("hidden");
@@ -71,11 +88,30 @@ function ProductsPage() {
   };
 
   return (
-    <div className="px-20  ">
+    <div>
+      <AiFillDelete
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDrop={(e) => {
+          var obj = JSON.parse(e.dataTransfer.getData("item"));
+          removeItemFromCart(obj);
+          setHideDeleteBTN("hidden");
+        }}
+        className={` ${hideDeleteBTN} p-2 m-auto mt-2 text-4xl bg-orange-600 rounded-lg`}
+      />
+
       <div>
         <BsCartDash
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
+          onDrop={(e) => {
+            var obj = JSON.parse(e.dataTransfer.getData("item"));
+            addItemToCart(obj);
+          }}
           onClick={() =>
-            hidecart === "hidden" ? setHideCart("show") : setHideCart("hidden")
+            hideCart === "hidden" ? setHideCart("show") : setHideCart("hidden")
           }
           className="text-2xl absolute top-3 right-40 text-white"
         />
@@ -83,11 +119,15 @@ function ProductsPage() {
           {Object.keys(cart).length}
         </p>
       </div>
-      <div className="  flex flex-wrap ">
+      <div className="  flex flex-wrap  ">
         {productList.map((product) => (
           <div
             key={product.id}
-            className=" relative bg-yellow-50 rounded-lg m-4 mb-20 w-48 h-94 pb-2 cursor-pointer hover:shadow-lg "
+            draggable
+            onDragStart={(e) => {
+              handleDragIn(product, e);
+            }}
+            className=" relative bg-yellow-50 rounded-lg m-4 mb-20 w-auto h-auto pb-2  hover:shadow-lg "
           >
             <span className=" m-4 absolute right-0 bg-blue-200 p-2 rounded-md text-yellow-100">
               -{Math.floor((product.data.price1 / product.data.price2) * 100)}%
@@ -128,10 +168,24 @@ function ProductsPage() {
       </div>
 
       <div
-        className={` ${hideCart} w-4/12 bg-red-100 p-4 shadow-lg absolute right-4 top-16`}
+        className={` ${hideCart} w-auto bg-red-100 p-2 mx-2 shadow-lg absolute right-4 top-12`}
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDrop={(e) => {
+          var obj = JSON.parse(e.dataTransfer.getData("item"));
+          addItemToCart(obj);
+        }}
       >
         {Object.entries(cart).map(([key, item]) => (
-          <div key={key} className="flex mt-2 ">
+          <div
+            draggable
+            onDragStart={(e) => {
+              handleDragOut(e, item);
+            }}
+            key={key}
+            className="flex mt-2 border-y-amber-950 "
+          >
             <Image
               className="rounded-full mt-4"
               src={item.link}
@@ -161,7 +215,7 @@ function ProductsPage() {
             <button>
               <AiOutlineDelete
                 onClick={() => {
-                  removeItemFromCart(item, key);
+                  removeItemFromCart(item);
                 }}
                 className="text-2xl m-8"
               />
@@ -170,13 +224,15 @@ function ProductsPage() {
         ))}
         <p className="text-2xl mt-2 float-right">
           Total: <s className="naira">N</s>
-          {values.reduce(
+          {Object.values(cart).reduce(
             (total, item) => total + item.quantity * item.price1,
             0
           )}
         </p>
+
         <button className={`p-2 bg-blue-500 rounded-lg mt-4`}>Check Out</button>
       </div>
+      <ToastContainer />
     </div>
   );
 }

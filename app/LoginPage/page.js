@@ -4,10 +4,22 @@ import { FiShoppingCart } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../FirebaseConfig/Firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toastStyle = {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  };
 
   // REDIRECT USER AFTER SIGNIN
   const RedirectUser = (e) => {
@@ -22,11 +34,11 @@ function Login() {
       RedirectUser();
     } catch (err) {
       if (err.code === "auth/invalid-email") {
-        alert("Enter a valid Email and Password");
+        toast.error("Enter a valid Email and Password", toastStyle);
       } else if (email === "" && password === "") {
-        alert("Enter a valid Email and Password");
+        toast("Enter a valid Email and Password", toastStyle);
       } else if (err.code === "auth/internal-error") {
-        alert("Check Internet conection");
+        toast("Check Internet conection", toastStyle);
       }
     }
   };
@@ -39,9 +51,9 @@ function Login() {
       RedirectUser();
     } catch (error) {
       if (error.code === "auth/internal-error") {
-        alert("Check Internet conection");
+        toast.error("Check Internet conection", toastStyle);
       } else if (error.code === "auth/popup-closed-by-user") {
-        alert("Popup closed by user");
+        toast.error("Popup closed by user", toastStyle);
       }
     }
   };
@@ -84,6 +96,18 @@ function Login() {
           >
             Login with Google <FcGoogle className="inline text-lg" />
           </button>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </form>
       </div>
     </div>
