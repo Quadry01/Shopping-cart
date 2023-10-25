@@ -19,13 +19,13 @@ function ProductsPage() {
   const [productList, setProductList] = useState([]);
 
   const handleDragOut = (e, product) => {
-    let pass = JSON.stringify(product);
+    const pass = JSON.stringify(product);
     e.dataTransfer.setData("item", pass);
     setHideDeleteBTN("show");
   };
 
   const handleDragIn = (product, e) => {
-    let item = JSON.stringify(product);
+    const item = JSON.stringify(product);
     e.dataTransfer.setData("item", item);
   };
 
