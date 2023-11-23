@@ -12,13 +12,13 @@ function Navbar() {
         <Link href="/">
           <li>Home</li>
         </Link>
-        <Link href="/">
+        <Link href="#">
           <li>Store</li>{" "}
         </Link>
-        <Link href="/">
+        <Link href="#">
           <li>Advertise with us</li>
         </Link>
-        <Link href="/">
+        <Link href="#">
           <li>About us</li>
         </Link>
       </ul>
