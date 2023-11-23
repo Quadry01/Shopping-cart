@@ -98,7 +98,7 @@ function ProductsPage() {
           removeItemFromCart(obj);
           setHideDeleteBTN("hidden");
         }}
-        className={` ${hideDeleteBTN} p-2 m-auto mt-2 text-4xl bg-orange-600 rounded-lg`}
+        className={` ${hideDeleteBTN} p-2 m-auto mt-2 text-4xl text-white bg-orange-600 rounded-lg`}
       />
 
       <div>

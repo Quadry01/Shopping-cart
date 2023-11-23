@@ -1,12 +1,12 @@
 # 🛒 Shopping Cart
 
-This project is buil with Next.js and Tailwindcss
+This project was built with Next.js and Tailwindcss
 
-**Shopping Cart** is a project that authenticate users to shop for products on the website.
+**Shopping Cart** is a project that authenticate users and allow users to shop for products on the website.
 
 ## 🚀 Live Demo
 
-- [Live Demo Link](https://endearing-bunny-d86298.netlify.app/productpage)
+- [Live Demo Link](https://endearing-bunny-d86298.netlify.app)
 
 ### 🏗 Setup
 
@@ -24,7 +24,7 @@ cd shopping-cart
 
 - Open it with your favorite code editor
 
-### 🛠 Install
+### 🛠 Installation
 
 To install linters and other dependencies run:
 
@@ -34,22 +34,25 @@ npm install
 
 To setup Firebase Authentication
 
-- [Firebase Authentication Tutoria](https://www.youtube.com/watch?v=cZAnibwI9u8)
+- [Firebase Authentication Documentation](https://firebase.google.com/docs/auth)
 
 To create Firestore Database
 
-- [Firestore Database Tutoria](https://www.youtube.com/watch?v=TW02hwhBvo4)
-- Create each product on the firestore database following the schema below
-  ![Alt text](public/schema.png)
+- [Firestore Database Documentation](https://firebase.google.com/docs/firestore)
+- Import the content of Data.json to your personal firestore database
 
 To Store your firebase credentials
 
 - Create a file named .env in the root folder
-- Paste your Firebase credential following the pattern below
-- ![.env file content](public/env.png)
+- Copy content from .env.sample
+- assign appropriate firebase values to the keys in .env
 
-  To go live on local server run:
+- To go live on local server run:
 
 ```
 npm run dev
 ```
+
+- To view live website go to the adress below on your browser:
+
+- [http://localhost:3000](http://localhost:3000)
