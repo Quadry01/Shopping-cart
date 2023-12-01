@@ -34,11 +34,14 @@ npm install
 
 To setup Firebase Authentication
 
-- [Firebase Authentication Documentation](https://firebase.google.com/docs/auth)
+- [Firestore Authentication Documentation (Create User With Email And Password)](https://firebase.google.com/docs/reference/js/auth.md#createuserwithemailandpassword)
+
+- [Firestore Authentication Documentation (Signin With mail](https://firebase.google.com/docs/reference/js/auth.md#signinwithemailandpassword)
 
 To create Firestore Database
 
-- [Firestore Database Documentation](https://firebase.google.com/docs/firestore)
+- [Firestore Documentation](https://firebase.google.com/docs/reference/js/firestore_lite.md#@firebase/firestore/lite)
+
 - Import the content of Data.json to your personal firestore database
 
 To Store your firebase credentials
