@@ -9,18 +9,6 @@ function Navbar() {
         <Link href={"/"}>
           <BsShop className="mr-4 sm:mr-2" />
         </Link>
-        <Link href="/">
-          <li>Home</li>
-        </Link>
-        <Link href="#">
-          <li>Store</li>{" "}
-        </Link>
-        <Link href="#">
-          <li>Advertise with us</li>
-        </Link>
-        <Link href="#">
-          <li>About us</li>
-        </Link>
       </ul>
     </div>
   );

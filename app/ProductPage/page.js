@@ -130,7 +130,7 @@ function ProductsPage() {
             className=" relative bg-yellow-50 rounded-lg m-4 mb-20 w-auto h-auto pb-2  hover:shadow-lg "
           >
             <span className=" m-4 absolute right-0 bg-blue-200 p-2 rounded-md text-yellow-100">
-              -{Math.floor((product.data.price1 / product.data.price2) * 100)}%
+              {product.data.discount}%
             </span>
             <Image
               priority={true}
@@ -145,12 +145,12 @@ function ProductsPage() {
 
               <h5 className="text-base">
                 <span className="naira">N</span>
-                {product.data.price1}
+                {(product.data.discount / 100) * product.data.price}
               </h5>
               <s className="opacity-10">
                 <h5 className="text-sm">
                   <span className="naira">N</span>
-                  {product.data.price2}
+                  {product.data.price}
                 </h5>
               </s>
 
@@ -196,7 +196,7 @@ function ProductsPage() {
             <h4 className="pt-4 mt-2 ml-4 text-2xl">{item.name}</h4>
             <p className="pt-4 ml-8 mt-4">
               <s className="naira">N</s>
-              {item.quantity * item.price1}
+              {item.quantity * item.price}
             </p>
             <p className="pt-4 ml-8 mt-4 "></p>
             <AiOutlineMinusSquare
@@ -225,7 +225,7 @@ function ProductsPage() {
         <p className="text-2xl mt-2 float-right">
           Total: <s className="naira">N</s>
           {Object.values(cart).reduce(
-            (total, item) => total + item.quantity * item.price1,
+            (total, item) => total + item.quantity * item.price,
             0
           )}
         </p>
